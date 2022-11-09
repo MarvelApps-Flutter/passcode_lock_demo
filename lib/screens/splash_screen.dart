@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../constants/app_constants.dart';
-import '../models/location.dart';
-import '../models/weather.dart';
 import 'lock_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,10 +17,8 @@ class SplashScreenState extends State<SplashScreen>
   late AnimationController delayedcontroller;
   late final Animation<double> _delayedAnimation;
 
-  init()
-  {
-    
-      controller = AnimationController(
+  init() {
+    controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     )..forward();
@@ -37,48 +33,20 @@ class SplashScreenState extends State<SplashScreen>
       curve: const Interval(0.8, 1, curve: Curves.fastOutSlowIn),
     );
 
-    // offset = Tween<Offset>(
-    //         begin: const Offset(0.0, -5), end: const Offset(0.0, 0.0))
-    //     .animate(CurvedAnimation(parent: controller, curve: Curves.bounceOut));
-        getWeatherData();
-  }
-
-  LocationHelper? locationData;
-
-  Future<void> getLocationData() async {
-    locationData = LocationHelper();
-    await locationData!.getCurrentLocation();
-
-    if (locationData!.latitude == null || locationData!.longitude == null) {
-      // todo: Handle no location
-    }
-  }
-
-  void getWeatherData() async {
-    await getLocationData();
-
-    WeatherData weatherData = WeatherData(locationData: locationData);
-    await weatherData.getCurrentTemperature();
-
-    if (weatherData.currentTemperature == null ||
-        weatherData.currentCondition == null) {
-      
-    }
+    offset = Tween<Offset>(
+            begin: const Offset(0.0, -5), end: const Offset(0.0, 0.0))
+        .animate(CurvedAnimation(parent: controller, curve: Curves.bounceOut));
 
     Future.delayed(
-        const Duration(seconds: 3), () => Navigator.push(context, MaterialPageRoute(builder: (context)=> LockScreen(
-            weatherData: weatherData,
-          )
-    )));
+        const Duration(seconds: 3),
+        () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const LockScreen())));
   }
 
   @override
   void initState() {
     super.initState();
-      init();
-    //    Future.delayed(
-    //     const Duration(seconds: 3), () => Navigator.push(context, MaterialPageRoute(builder: (context)=> const HomeScreen()
-    // )));
+    init();
   }
 
   @override
@@ -117,15 +85,15 @@ class SplashScreenState extends State<SplashScreen>
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children:  const [
-                   Text(
+                children: const [
+                  Text(
                     AppConstants.successive,
                     style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 3),
                   ),
-                   Text(
+                  Text(
                     AppConstants.technologies,
                     style: TextStyle(
                         fontSize: 21,

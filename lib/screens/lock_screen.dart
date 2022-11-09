@@ -36,7 +36,6 @@ class _LockScreenState extends State<LockScreen> {
       temperature = weatherData.currentTemperature!.round();
       WeatherDisplayData weatherDisplayData =
           weatherData.getWeatherDisplayData();
-      
     });
   }
 
@@ -45,11 +44,6 @@ class _LockScreenState extends State<LockScreen> {
     dateFormatter = DateFormat('yyyy-MM-dd');
     timeFormattedResult = timeFormatter!.format(DateTime.now());
     dateFormattedResult = DateFormat.MMMMEEEEd().format(DateTime.now());
-    if(widget.weatherData != null)
-    {
-        updateDisplayInfo(widget.weatherData!);
-    }
-    print("temperature is $temperature");
   }
 
   @override
@@ -63,15 +57,13 @@ class _LockScreenState extends State<LockScreen> {
     return Scaffold(
       backgroundColor: const Color(0xff0943C9),
       body: GestureDetector(
-        onTap: () {
-        },
+        onTap: () {},
         onVerticalDragUpdate: (details) {
           int sensitivity = 8;
           if (details.delta.dy > sensitivity) {
             // Down Swipe
-           
+
           } else if (details.delta.dy < -sensitivity) {
-           
             _showLockScreen(
               context,
               opaque: false,
@@ -92,7 +84,7 @@ class _LockScreenState extends State<LockScreen> {
                 left: 0,
                 right: 0,
                 child: Image.asset(
-                 AppConstants.weather,
+                  AppConstants.weather,
                   fit: BoxFit.fill,
                 )),
             SizedBox(
@@ -100,7 +92,6 @@ class _LockScreenState extends State<LockScreen> {
               child: FractionallySizedBox(
                 widthFactor: 0.8,
                 child: Column(
-                 
                   children: <Widget>[
                     const SizedBox(
                       height: 50,
@@ -141,7 +132,7 @@ class _LockScreenState extends State<LockScreen> {
                     ),
                     GestureDetector(
                         child: Image.asset(
-                     AppConstants.lock,
+                      AppConstants.lock,
                       height: 150,
                       width: 150,
                     )),
@@ -157,18 +148,18 @@ class _LockScreenState extends State<LockScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    temperature != null ? Center(
+                    Center(
                       child: Text(
-                        ' $temperature°',
+                        '25°',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 80.0,
                           letterSpacing: -5,
                         ),
                       ),
-                    ) : Container(),
+                    ),
                     Image.asset(
-                     AppConstants.swipe,
+                      AppConstants.swipe,
                       height: 80,
                       width: 60,
                     ),
@@ -251,7 +242,7 @@ class _LockScreenState extends State<LockScreen> {
           child: TextButton(
             onPressed: _resetAppPassword,
             child: const Text(
-             AppConstants.resetPass,
+              AppConstants.resetPass,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 16,
@@ -269,7 +260,6 @@ class _LockScreenState extends State<LockScreen> {
       }
       _showRestoreDialog(() {
         Navigator.maybePop(context);
-
       });
     });
   }
@@ -280,17 +270,17 @@ class _LockScreenState extends State<LockScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
-           AppConstants.resetPass,
+            AppConstants.resetPass,
             style: TextStyle(color: Colors.black87),
           ),
           content: const Text(
-           AppConstants.passReset,
+            AppConstants.passReset,
             style: TextStyle(color: Colors.black87),
           ),
           actions: <Widget>[
             TextButton(
               child: const Text(
-               AppConstants.cancel,
+                AppConstants.cancel,
                 style: TextStyle(fontSize: 18),
               ),
               onPressed: () {
