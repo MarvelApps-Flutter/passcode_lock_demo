@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../constants/app_constants.dart';
 import '../models/location.dart';
 import '../models/weather.dart';
-import 'home_screen.dart';
-import 'test_screen.dart';
+import 'lock_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -39,9 +37,9 @@ class SplashScreenState extends State<SplashScreen>
       curve: const Interval(0.8, 1, curve: Curves.fastOutSlowIn),
     );
 
-    offset = Tween<Offset>(
-            begin: const Offset(0.0, -5), end: const Offset(0.0, 0.0))
-        .animate(CurvedAnimation(parent: controller, curve: Curves.bounceOut));
+    // offset = Tween<Offset>(
+    //         begin: const Offset(0.0, -5), end: const Offset(0.0, 0.0))
+    //     .animate(CurvedAnimation(parent: controller, curve: Curves.bounceOut));
         getWeatherData();
   }
 
@@ -57,31 +55,18 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   void getWeatherData() async {
-    // Fetch the location
     await getLocationData();
 
-    // Fetch the current weather
     WeatherData weatherData = WeatherData(locationData: locationData);
     await weatherData.getCurrentTemperature();
 
     if (weatherData.currentTemperature == null ||
         weatherData.currentCondition == null) {
-      // todo: Handle no weather
+      
     }
 
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) {
-    //       return ExampleHomePage(
-    //         weatherData: weatherData,
-    //       );
-    //     },
-    //   ),
-    // );
-
     Future.delayed(
-        const Duration(seconds: 3), () => Navigator.push(context, MaterialPageRoute(builder: (context)=> ExampleHomePage(
+        const Duration(seconds: 3), () => Navigator.push(context, MaterialPageRoute(builder: (context)=> LockScreen(
             weatherData: weatherData,
           )
     )));
@@ -103,13 +88,6 @@ class SplashScreenState extends State<SplashScreen>
       children: [
         _marvelAnimatedLogo(context),
         _animatedText(context),
-        Center(
-          child: SpinKitRipple(
-            color: Colors.deepOrange[600],
-            size: 150.0,
-            duration: Duration(milliseconds: 1200),
-          ),
-        ),
         _footer()
       ],
     ));

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import '../screens/home_screen.dart';
 import 'circle.dart';
 import 'keyboard.dart';
 import 'shake_curve.dart';
@@ -87,9 +87,7 @@ class _PasscodeScreenState extends State<PasscodeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF292D32),
-      //backgroundColor: Colors.grey[300],
-      //backgroundColor: widget.backgroundColor ?? Colors.black.withOpacity(0.8),
+      backgroundColor: const Color(0xFF292D32),
       body: SafeArea(
         child: OrientationBuilder(
           builder: (context, orientation) {
@@ -124,12 +122,6 @@ class _PasscodeScreenState extends State<PasscodeScreen>
               ),
             ),
           ),
-          // Positioned(
-          //   child: Align(
-          //     alignment: Alignment.bottomRight,
-          //     child: _buildDeleteButton(),
-          //   ),
-          // ),
         ],
       );
 
@@ -141,38 +133,36 @@ class _PasscodeScreenState extends State<PasscodeScreen>
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    child: Stack(
-                      children: <Widget>[
-                        Positioned(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                widget.title,
-                                Container(
-                                  margin: const EdgeInsets.only(top: 20),
-                                  height: 40,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: _buildCircles(),
-                                  ),
+                  Stack(
+                    children: <Widget>[
+                      Positioned(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              widget.title,
+                              Container(
+                                margin: const EdgeInsets.only(top: 20),
+                                height: 40,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: _buildCircles(),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                        widget.bottomWidget != null
-                            ? Positioned(
-                                child: Align(
-                                    alignment: Alignment.topCenter,
-                                    child: widget.bottomWidget),
-                              )
-                            : Container()
-                      ],
-                    ),
+                      ),
+                      widget.bottomWidget != null
+                          ? Positioned(
+                              child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: widget.bottomWidget),
+                            )
+                          : Container()
+                    ],
                   ),
                   _buildKeyboard(),
                 ],
@@ -188,13 +178,11 @@ class _PasscodeScreenState extends State<PasscodeScreen>
         ],
       );
 
-  _buildKeyboard() => Container(
-        child: Keyboard(
-          onKeyboardTap: _onKeyboardButtonPressed,
-          keyboardUIConfig: widget.keyboardUIConfig,
-          digits: widget.digits,
-        ),
-      );
+  _buildKeyboard() => Keyboard(
+    onKeyboardTap: _onKeyboardButtonPressed,
+    keyboardUIConfig: widget.keyboardUIConfig,
+    digits: widget.digits,
+  );
 
   List<Widget> _buildCircles() {
     var list = <Widget>[];
@@ -203,7 +191,7 @@ class _PasscodeScreenState extends State<PasscodeScreen>
     for (int i = 0; i < widget.passwordDigits; i++) {
       list.add(
         Container(
-          margin: EdgeInsets.all(8),
+          margin: const EdgeInsets.all(8),
           child: Circle(
             filled: i < enteredPasscode.length,
             circleUIConfig: config,
@@ -264,6 +252,8 @@ class _PasscodeScreenState extends State<PasscodeScreen>
   _showValidation(bool isValid) {
     if (isValid) {
       Navigator.maybePop(context).then((pop) => _validationCallback());
+       Navigator.push(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
+      
     } else {
       controller.forward();
     }
@@ -272,6 +262,7 @@ class _PasscodeScreenState extends State<PasscodeScreen>
   _validationCallback() {
     if (widget.isValidCallback != null) {
       widget.isValidCallback!();
+       //Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
     } else {
       print(
           "You didn't implement validation callback. Please handle a state by yourself then.");
@@ -279,15 +270,13 @@ class _PasscodeScreenState extends State<PasscodeScreen>
   }
 
   Widget _buildDeleteButton() {
-    return Container(
-      child: CupertinoButton(
-        onPressed: _onDeleteCancelButtonPressed,
-        child: Container(
-          margin: widget.keyboardUIConfig.digitInnerMargin,
-          child: enteredPasscode.length == 0
-              ? widget.cancelButton
-              : widget.deleteButton,
-        ),
+    return CupertinoButton(
+      onPressed: _onDeleteCancelButtonPressed,
+      child: Container(
+        margin: widget.keyboardUIConfig.digitInnerMargin,
+        child: enteredPasscode.isEmpty
+            ? widget.cancelButton
+            : widget.deleteButton,
       ),
     );
   }

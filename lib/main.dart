@@ -1,16 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'package:passcode_lock_demo/constants/app_constants.dart';
 import 'models/location.dart';
 import 'models/weather.dart';
-import 'screens/loading_screen.dart';
 import 'screens/splash_screen.dart';
-import 'screens/test_screen.dart';
+import 'screens/lock_screen.dart';
 
 void main() => runApp(MyApp());
 
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -29,23 +30,20 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getWeatherData() async {
-    // Fetch the location
     await getLocationData();
 
-    // Fetch the current weather
     WeatherData weatherData = WeatherData(locationData: locationData);
     await weatherData.getCurrentTemperature();
 
     if (weatherData.currentTemperature == null ||
         weatherData.currentCondition == null) {
-      // todo: Handle no weather
     }
 
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) {
-          return ExampleHomePage(
+          return LockScreen(
             weatherData: weatherData,
           );
         },
@@ -60,22 +58,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    //init();
     super.initState();
   }
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Passcode Lock Screen Example',
+      title: AppConstants.appTitle,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home:
-          //HomeScreen()
-          //LoadingScreen(),
-          SplashScreen()
+          const SplashScreen()
     );
   }
 }
