@@ -102,7 +102,7 @@ class SplashScreenState extends State<SplashScreen>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 AppConstants.poweredBy,
                 style: TextStyle(
                     fontSize: 16,
@@ -117,15 +117,15 @@ class SplashScreenState extends State<SplashScreen>
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children:  [
-                  Text(
+                children:  const [
+                   Text(
                     AppConstants.successive,
                     style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 3),
                   ),
-                  Text(
+                   Text(
                     AppConstants.technologies,
                     style: TextStyle(
                         fontSize: 21,

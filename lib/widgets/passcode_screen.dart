@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:passcode_lock_demo/widgets/common_functions.dart';
 import '../screens/home_screen.dart';
 import 'circle.dart';
 import 'keyboard.dart';
@@ -53,7 +54,7 @@ class PasscodeScreen extends StatefulWidget {
 }
 
 class _PasscodeScreenState extends State<PasscodeScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, CommonFunctions {
   late StreamSubscription<bool> streamSubscription;
   String enteredPasscode = '';
   late AnimationController controller;
@@ -252,10 +253,11 @@ class _PasscodeScreenState extends State<PasscodeScreen>
   _showValidation(bool isValid) {
     if (isValid) {
       Navigator.maybePop(context).then((pop) => _validationCallback());
-       Navigator.push(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
-      
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
+      showGreenToast("You are authenticated...");
     } else {
       controller.forward();
+      showRedToast("You entered wrong passcode!!!");
     }
   }
 

@@ -39,6 +39,7 @@ dependencies:
   http: 
   flutter_spinkit:
   carousel_slider: ^4.0.0
+  fluttertoast: 
 
 dev_dependencies:
   flutter_test:

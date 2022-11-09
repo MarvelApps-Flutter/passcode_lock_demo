@@ -93,7 +93,7 @@ class _LockScreenState extends State<LockScreen> {
                 right: 0,
                 child: Image.asset(
                  AppConstants.weather,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 )),
             SizedBox(
               width: MediaQuery.of(context).size.width,

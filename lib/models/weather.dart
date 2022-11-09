@@ -21,7 +21,7 @@ class WeatherData {
 
 
   Future<void> getCurrentTemperature() async {
-    var url = Uri.parse('http://api.openweathermap.org/data/2.5/weather?lat=${locationData!.latitude}&lon=${locationData!.longitude}&appid=bf3a2060f20086610dd0184c16965bda&units=metric');
+    var url = Uri.parse('');
     var response = await http.get(
         url);
 
