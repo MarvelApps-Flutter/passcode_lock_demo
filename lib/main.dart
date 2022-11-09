@@ -6,7 +6,7 @@ import 'models/weather.dart';
 import 'screens/splash_screen.dart';
 import 'screens/lock_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 
 class MyApp extends StatefulWidget {
